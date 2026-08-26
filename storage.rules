@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Slike proizvoda - svi mogu čitati, svi mogu pisati (za sada)
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
