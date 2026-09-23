@@ -1,112 +1,171 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/Login.css';
+import {
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+
+import { auth } from '../firebase';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const redirectPath =
+    location.state?.from?.pathname || '/';
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     setError('');
 
-    // Simple authentication
-    if (username === 'Belmo' && password === 'Elmedin.1') {
-      // Store auth state in sessionStorage
-      sessionStorage.setItem('isAdminAuthenticated', 'true');
-      setTimeout(() => {
-        setLoading(false);
-        navigate('/admin');
-      }, 500);
-    } else {
+    if (!email.trim() || !password) {
+      setError('Unesite email adresu i lozinku.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await signInWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
+
+      navigate(redirectPath, { replace: true });
+    } catch (loginError) {
+      console.error('Greška prilikom prijave:', loginError);
+
+      switch (loginError.code) {
+        case 'auth/invalid-email':
+          setError('Email adresa nije ispravna.');
+          break;
+
+        case 'auth/invalid-credential':
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+          setError(
+            'Email ili lozinka nisu ispravni.'
+          );
+          break;
+
+        case 'auth/too-many-requests':
+          setError(
+            'Previše pokušaja. Pokušajte ponovo kasnije.'
+          );
+          break;
+
+        default:
+          setError(
+            'Prijava nije uspjela. Pokušajte ponovo.'
+          );
+      }
+    } finally {
       setLoading(false);
-      setError('Pogrešno korisničko ime ili lozinka!');
     }
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
-        <div className="login-card">
-          <div className="login-header">
-            <div className="login-icon">🔐</div>
-            <h1 className="login-title">Admin Login</h1>
-            <p className="login-subtitle">Unesite podatke za pristup Admin panelu</p>
+    <main className="auth-page">
+      <div className="auth-container">
+        <div className="auth-card">
+          <div className="auth-header">
+            <div className="auth-icon">👤</div>
+
+            <h1 className="auth-title">
+              Prijava
+            </h1>
+
+            <p className="auth-subtitle">
+              Prijavite se na svoj LayerLab3D nalog.
+            </p>
           </div>
 
-          <form onSubmit={handleLogin} className="login-form">
-            {error && (
-              <div className="error-message">
-                <span className="error-icon">⚠️</span>
-                {error}
-              </div>
-            )}
+          {error && (
+            <div className="auth-error" role="alert">
+              {error}
+            </div>
+          )}
 
+          <form
+            onSubmit={handleSubmit}
+            className="auth-form"
+          >
             <div className="form-group">
-              <label className="form-label" htmlFor="username">
-                <span className="label-icon">👤</span>
-                Korisničko ime
+              <label
+                htmlFor="login-email"
+                className="form-label"
+              >
+                Email adresa
               </label>
+
               <input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                id="login-email"
+                type="email"
                 className="form-input"
-                placeholder="Unesite korisničko ime"
+                placeholder="vas@email.com"
+                value={email}
+                onChange={(event) =>
+                  setEmail(event.target.value)
+                }
+                autoComplete="email"
                 required
-                autoComplete="username"
               />
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="password">
-                <span className="label-icon">🔑</span>
+              <label
+                htmlFor="login-password"
+                className="form-label"
+              >
                 Lozinka
               </label>
+
               <input
-                id="password"
+                id="login-password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 className="form-input"
                 placeholder="Unesite lozinku"
-                required
+                value={password}
+                onChange={(event) =>
+                  setPassword(event.target.value)
+                }
                 autoComplete="current-password"
+                required
               />
             </div>
 
-            <button 
-              type="submit" 
-              className="login-button"
+            <button
+              type="submit"
+              className="auth-button"
               disabled={loading}
             >
-              {loading ? (
-                <>
-                  <span className="loading-spinner-small"></span>
-                  Prijava...
-                </>
-              ) : (
-                <>
-                  <span className="button-icon">🚀</span>
-                  Prijavi se
-                </>
-              )}
+              {loading
+                ? 'Prijavljivanje...'
+                : 'Prijavi se'}
             </button>
           </form>
 
-          <div className="login-footer">
-            <a href="/" className="back-link">
-              ← Nazad na početnu
-            </a>
+          <div className="auth-footer">
+            <p>
+              Nemate nalog?{' '}
+              <Link to="/registracija">
+                Registrujte se
+              </Link>
+            </p>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

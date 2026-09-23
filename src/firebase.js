@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-
+import { getAuth } from 'firebase/auth';
 const firebaseConfig = {
   apiKey: "AIzaSyCQ3hyYkKSI41KwrQojB3NqHc7s5dciVsA",
   authDomain: "d-print-shop-44b62.firebaseapp.com",
@@ -15,5 +15,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+export const auth = getAuth(app);
