@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "public",
+    "site": "layerlab3d",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
