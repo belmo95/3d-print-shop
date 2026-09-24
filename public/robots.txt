@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://layerlab3d.web.app/sitemap.xml

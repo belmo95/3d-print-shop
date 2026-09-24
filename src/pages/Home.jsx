@@ -9,6 +9,7 @@ import {
 import { db } from '../firebase';
 import ProductCard from '../components/ProductCard';
 
+import logoIcon from '../assets/layerlab3d-site-icon.png';
 import '../styles/Header.css';
 
 function Home() {
@@ -256,7 +257,12 @@ function Home() {
       <section className="hero">
         <div className="hero-container">
           <h1 className="hero-title">
-            LayerLab3D
+            <img
+              src={logoIcon}
+              alt="LayerLab3D logo"
+              className="hero-logo"
+            />
+            LayerLab3DE
           </h1>
 
           <p className="hero-subtitle">

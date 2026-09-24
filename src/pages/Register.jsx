@@ -123,7 +123,7 @@ function Register() {
             </h1>
 
             <p className="auth-subtitle">
-              Kreirajte svoj LayerLab3D nalog.
+              Kreirajte svoj LayerLab3DE nalog.
             </p>
           </div>
 

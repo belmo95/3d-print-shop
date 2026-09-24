@@ -86,7 +86,7 @@ function Login() {
             </h1>
 
             <p className="auth-subtitle">
-              Prijavite se na svoj LayerLab3D nalog.
+              Prijavite se na svoj LayerLab3DE nalog.
             </p>
           </div>
 

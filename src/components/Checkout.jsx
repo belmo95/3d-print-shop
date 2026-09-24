@@ -278,7 +278,7 @@ ${orderReference.id}
           `,
 
           html: `
-            <h2>Nova narudžba - LayerLab3D</h2>
+            <h2>Nova narudžba - LayerLab3DE</h2>
 
             <h3>Podaci o proizvodu</h3>
 

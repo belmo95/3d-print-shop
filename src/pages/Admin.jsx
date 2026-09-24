@@ -745,7 +745,7 @@ function Admin() {
         <div className="admin-dashboard-header">
           <div>
             <p className="admin-kicker">
-              LayerLab3D administracija
+              LayerLab3DE administracija
             </p>
 
             <h1 className="admin-dashboard-title">

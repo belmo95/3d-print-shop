@@ -1,0 +1,22 @@
+{
+  "name": "LayerLab3D",
+  "short_name": "LayerLab3D",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#061426",
+  "theme_color": "#061426",
+  "icons": [
+    {
+      "src": "/layerlab3d-site-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/layerlab3d-site-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

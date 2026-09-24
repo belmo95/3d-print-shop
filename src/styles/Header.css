@@ -1,5 +1,5 @@
 /* =========================
-   LayerLab3D Header and Home
+   LayerLab3DE Header and Home
    ========================= */
 
 * {
@@ -1364,4 +1364,19 @@
 
 .user-menu-button {
   position: relative;
+}
+.hero-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.hero-logo {
+  width: 2.5em;
+  height: 2.5em;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
 }

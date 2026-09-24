@@ -257,7 +257,7 @@ function Messages() {
                 <div className="message-bubble-top">
                   <span className="message-sender">
                     {fromAdmin
-                      ? 'LayerLab3D'
+                      ? 'LayerLab3DE'
                       : 'Vi'}
                   </span>
 
