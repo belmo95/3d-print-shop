@@ -6,7 +6,7 @@ import {
   useNavigate,
   useLocation,
 } from 'react-router-dom';
-
+import ScrollToTop from './components/ScrollToTop';
 import { useEffect, useState } from 'react';
 import UserNotifications from './components/UserNotifications';
 import {
@@ -455,6 +455,7 @@ function AppContent() {
   return (
     <div className="app">
       <ScrollToHash />
+      <ScrollToTop />
 
       <Navigation
         user={user}

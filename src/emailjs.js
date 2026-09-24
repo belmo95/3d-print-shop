@@ -1,27 +1,71 @@
 import emailjs from '@emailjs/browser';
 
 emailjs.init({
-  publicKey: "irFwQSVBbFgEFU5jf",
+  publicKey: 'irFwQSVBbFgEFU5jf',
 });
 
-export const sendOrderEmail = async (orderData) => {
+export const sendOrderEmail = async (
+  orderData
+) => {
   const templateParams = {
     to_name: 'Admin',
-    order_id: orderData.orderId,
-    product_name: orderData.product.name,
-    quantity: orderData.quantity.toString(),
-    unit_price: orderData.unitPrice.toString(),
-    total: orderData.total.toString(),
-    delivery_method: orderData.deliveryMethod === 'pickup' ? 'Lično preuzimanje' : 'Slanje poštom',
-    customer_name: orderData.customer.name,
-    customer_email: orderData.customer.email,
-    customer_phone: orderData.customer.phone,
-    customer_address: orderData.customer.address || 'N/A',
-    customer_city: orderData.customer.city || 'N/A',
-    customer_postal_code: orderData.customer.postalCode || 'N/A',
+
+    order_id: String(
+      orderData.orderId || ''
+    ),
+
+    product_name: String(
+      orderData.productName || ''
+    ),
+
+    quantity: String(
+      orderData.quantity || 1
+    ),
+
+    unit_price: String(
+      Number(orderData.price || 0).toFixed(2)
+    ),
+
+    total: String(
+      Number(orderData.total || 0).toFixed(2)
+    ),
+
+    delivery_method:
+      'Slanje poštom',
+
+    customer_name: String(
+      orderData.customerName || ''
+    ),
+
+    customer_email: String(
+      orderData.userEmail || ''
+    ),
+
+    customer_phone: String(
+      orderData.customerPhone || ''
+    ),
+
+    customer_address: String(
+      orderData.address || 'N/A'
+    ),
+
+    customer_city: String(
+      orderData.city || 'N/A'
+    ),
+
+    customer_postal_code: String(
+      orderData.postalCode || 'N/A'
+    ),
+
+    customer_note: String(
+      orderData.note || 'Nema napomene'
+    ),
   };
 
-  console.log('Sending email with params:', templateParams);
+  console.log(
+    'Šaljem email sa parametrima:',
+    templateParams
+  );
 
   try {
     const response = await emailjs.send(
@@ -29,10 +73,19 @@ export const sendOrderEmail = async (orderData) => {
       'template_4egbgum',
       templateParams
     );
-    console.log('Email sent successfully:', response);
+
+    console.log(
+      'Email uspješno poslan:',
+      response
+    );
+
     return true;
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error(
+      'Greška pri slanju emaila:',
+      error
+    );
+
     return false;
   }
 };

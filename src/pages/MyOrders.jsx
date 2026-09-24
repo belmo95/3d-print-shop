@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 
 import {
   collection,
+  doc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 
@@ -67,23 +69,6 @@ function MyOrders() {
               currentUser.uid
             )
           );
-          const markOrderAsRead = async (orderId) => {
-  try {
-    await updateDoc(
-      doc(db, 'orders', orderId),
-      {
-        statusChanged: false,
-        hasNotification: false,
-        readByCustomer: true,
-      }
-    );
-  } catch (error) {
-    console.error(
-      'Greška pri označavanju narudžbe:',
-      error
-    );
-  }
-};
 
           const ordersSnapshot =
             await getDocs(ordersQuery);
@@ -139,13 +124,73 @@ function MyOrders() {
     };
   }, [navigate]);
 
+  const markOrderAsRead = async (orderId) => {
+    const selectedOrder = orders.find(
+      (order) => order.id === orderId
+    );
+
+    if (!selectedOrder) {
+      return;
+    }
+
+    const hasUnreadNotification =
+      selectedOrder.hasNotification === true ||
+      selectedOrder.statusChanged === true ||
+      selectedOrder.readByCustomer === false;
+
+    if (!hasUnreadNotification) {
+      return;
+    }
+
+    setOrders((previousOrders) =>
+      previousOrders.map((order) =>
+        order.id === orderId
+          ? {
+              ...order,
+              hasNotification: false,
+              statusChanged: false,
+              readByCustomer: true,
+            }
+          : order
+      )
+    );
+
+    try {
+      await updateDoc(
+        doc(db, 'orders', orderId),
+        {
+          hasNotification: false,
+          statusChanged: false,
+          readByCustomer: true,
+        }
+      );
+    } catch (updateError) {
+      console.error(
+        'Greška pri označavanju narudžbe:',
+        updateError
+      );
+
+      setOrders((previousOrders) =>
+        previousOrders.map((order) =>
+          order.id === orderId
+            ? selectedOrder
+            : order
+        )
+      );
+
+      setError(
+        updateError.message ||
+          'Obavijest nije moguće označiti kao pročitanu.'
+      );
+    }
+  };
+
   const formatDate = (timestamp) => {
     if (!timestamp) {
       return 'Datum nije dostupan';
     }
 
     if (
-      timestamp &&
       typeof timestamp.toDate === 'function'
     ) {
       return timestamp.toDate().toLocaleString(
@@ -217,10 +262,12 @@ function MyOrders() {
   };
 
   const getOrderTotal = (order) => {
+    const calculatedTotal =
+      Number(order.price || 0) *
+      Number(order.quantity || 1);
+
     const total = Number(
-      order.total ??
-        Number(order.price || 0) *
-          Number(order.quantity || 1)
+      order.total ?? calculatedTotal
     );
 
     return Number.isFinite(total)
@@ -300,12 +347,45 @@ function MyOrders() {
                 order.image ||
                 '';
 
+              const hasUnreadNotification =
+                order.hasNotification === true ||
+                order.statusChanged === true ||
+                order.readByCustomer === false;
+
               return (
                 <article
-  className="order-card"
-  key={order.id}
-  onClick={() => markOrderAsRead(order.id)}
->
+                  key={order.id}
+                  className={`order-card ${
+                    hasUnreadNotification
+                      ? 'order-card-unread'
+                      : ''
+                  }`}
+                  onClick={() =>
+                    markOrderAsRead(order.id)
+                  }
+                  role="button"
+                  tabIndex="0"
+                  onKeyDown={(event) => {
+                    if (
+                      event.key === 'Enter' ||
+                      event.key === ' '
+                    ) {
+                      event.preventDefault();
+                      markOrderAsRead(order.id);
+                    }
+                  }}
+                  aria-label={
+                    hasUnreadNotification
+                      ? 'Otvori novu obavijest narudžbe'
+                      : 'Otvori narudžbu'
+                  }
+                >
+                  {hasUnreadNotification && (
+                    <div className="order-unread-label">
+                      🔔 Nova obavijest
+                    </div>
+                  )}
+
                   <div className="order-card-header">
                     <div>
                       <h2 className="order-number">

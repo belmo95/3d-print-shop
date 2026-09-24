@@ -31,8 +31,8 @@ function UserNotifications() {
 
       const unreadOrders = orders.filter(
         (order) =>
-          order.statusChanged === true ||
           order.hasNotification === true ||
+          order.statusChanged === true ||
           order.readByCustomer === false
       ).length;
 
@@ -132,7 +132,7 @@ function UserNotifications() {
     };
   }, []);
 
-  if (notificationCount <= 0) {
+  if (notificationCount === 0) {
     return null;
   }
 

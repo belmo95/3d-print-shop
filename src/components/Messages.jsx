@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   addDoc,
@@ -20,7 +20,7 @@ function Messages() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
-  const messagesEndRef = useRef(null);
+
 
   useEffect(() => {
     const unsubscribeAuth =
@@ -101,11 +101,7 @@ function Messages() {
               );
             }
 
-            setTimeout(() => {
-              messagesEndRef.current?.scrollIntoView({
-                behavior: 'smooth',
-              });
-            }, 100);
+            
           },
           (snapshotError) => {
             console.error(
@@ -280,7 +276,7 @@ function Messages() {
           })
         )}
 
-        <div ref={messagesEndRef}></div>
+      
       </div>
 
       <form

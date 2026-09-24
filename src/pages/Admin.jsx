@@ -9,7 +9,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  query,
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
@@ -631,38 +630,51 @@ function Admin() {
     }
   };
 
- const updateOrderStatus = async (
-  orderId,
-  status
-) => {
-  try {
-    await updateDoc(
-      doc(db, 'orders', orderId),
-      {
-        status,
-        statusChanged: true,
-        hasNotification: true,
-        readByCustomer: false,
-        updatedAt: serverTimestamp(),
-      }
-    );
+  const updateOrderStatus = async (
+    orderId,
+    status
+  ) => {
+    try {
+      await updateDoc(
+        doc(db, 'orders', orderId),
+        {
+          status,
+          statusChanged: true,
+          hasNotification: true,
+          readByCustomer: false,
+          updatedAt: serverTimestamp(),
+        }
+      );
 
-    showSuccess(
-      'Status narudžbe je izmijenjen.'
-    );
+      setOrders((previousOrders) =>
+        previousOrders.map((order) =>
+          order.id === orderId
+            ? {
+                ...order,
+                status,
+                statusChanged: true,
+                hasNotification: true,
+                readByCustomer: false,
+              }
+            : order
+        )
+      );
 
-    await loadOrders();
-  } catch (statusError) {
-    console.error(
-      'Greška pri promjeni statusa:',
-      statusError
-    );
+      showSuccess(
+        'Status narudžbe je izmijenjen i kupac je obaviješten.'
+      );
+    } catch (statusError) {
+      console.error(
+        'Greška pri promjeni statusa:',
+        statusError
+      );
 
-    showError(
-      'Status narudžbe nije moguće izmijeniti.'
-    );
-  }
-};
+      showError(
+        statusError.message ||
+          'Status narudžbe nije moguće izmijeniti.'
+      );
+    }
+  };
 
   const formatDate = (timestamp) => {
     if (!timestamp) {
@@ -678,7 +690,9 @@ function Admin() {
     }
 
     if (timestamp instanceof Date) {
-      return timestamp.toLocaleString('bs-BA');
+      return timestamp.toLocaleString(
+        'bs-BA'
+      );
     }
 
     return 'Nije dostupno';

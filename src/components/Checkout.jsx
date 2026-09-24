@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+
 import {
   addDoc,
   collection,
   serverTimestamp,
 } from 'firebase/firestore';
+import { sendOrderEmail } from '../emailjs';
 import {
   Link,
   useLocation,
@@ -16,7 +18,8 @@ function Checkout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const productFromState = location.state?.product || null;
+  const productFromState =
+    location.state?.product || null;
 
   const [product, setProduct] = useState(
     productFromState
@@ -33,14 +36,17 @@ function Checkout() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
+  const [pageLoading, setPageLoading] =
+    useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(
-      (currentUser) => {
+    const unsubscribe =
+      auth.onAuthStateChanged((currentUser) => {
         if (!currentUser) {
+          setPageLoading(false);
+
           navigate('/prijava', {
             replace: true,
             state: {
@@ -64,8 +70,7 @@ function Checkout() {
         }));
 
         setPageLoading(false);
-      }
-    );
+      });
 
     return () => unsubscribe();
   }, [navigate, productFromState]);
@@ -206,15 +211,17 @@ function Checkout() {
         total: totalPrice,
 
         customerName: customerData.name.trim(),
-        customerPhone: customerData.phone.trim(),
+        customerPhone:
+          customerData.phone.trim(),
         address: customerData.address.trim(),
         city: customerData.city.trim(),
         note: customerData.note.trim(),
 
         status: 'pending',
-statusChanged: false,
-hasNotification: false,
-readByCustomer: true,
+        statusChanged: false,
+        hasNotification: false,
+        readByCustomer: true,
+
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       };
@@ -223,6 +230,120 @@ readByCustomer: true,
         collection(db, 'orders'),
         orderData
       );
+      const emailSent = await sendOrderEmail({
+  orderId: orderReference.id,
+  ...orderData,
+});
+
+if (!emailSent) {
+  console.warn(
+    'Narudžba je sačuvana, ali email nije poslan.'
+  );
+}
+
+      /*
+        Ovaj dokument aktivira Firebase Trigger Email
+        ekstenziju ako je podešena da prati kolekciju
+        "mail".
+      */
+      await addDoc(collection(db, 'mail'), {
+        to: 'layerlab.3de@gmail.com',
+
+        message: {
+          subject: `Nova narudžba - ${
+            orderData.productName
+          }`,
+
+          text: `
+Nova narudžba je primljena.
+
+Proizvod: ${orderData.productName}
+Količina: ${orderData.quantity}
+Cijena po komadu: ${orderData.price.toFixed(2)} KM
+Ukupno: ${orderData.total.toFixed(2)} KM
+
+Kupac: ${orderData.customerName}
+Email: ${orderData.userEmail}
+Telefon: ${orderData.customerPhone}
+
+Adresa:
+${orderData.address}
+${orderData.city}
+
+Napomena:
+${orderData.note || 'Nema napomene'}
+
+ID narudžbe:
+${orderReference.id}
+          `,
+
+          html: `
+            <h2>Nova narudžba - LayerLab3D</h2>
+
+            <h3>Podaci o proizvodu</h3>
+
+            <p>
+              <strong>Proizvod:</strong>
+              ${orderData.productName}
+            </p>
+
+            <p>
+              <strong>Količina:</strong>
+              ${orderData.quantity}
+            </p>
+
+            <p>
+              <strong>Cijena po komadu:</strong>
+              ${orderData.price.toFixed(2)} KM
+            </p>
+
+            <p>
+              <strong>Ukupno:</strong>
+              ${orderData.total.toFixed(2)} KM
+            </p>
+
+            <h3>Podaci o kupcu</h3>
+
+            <p>
+              <strong>Ime i prezime:</strong>
+              ${orderData.customerName}
+            </p>
+
+            <p>
+              <strong>Email:</strong>
+              ${orderData.userEmail}
+            </p>
+
+            <p>
+              <strong>Telefon:</strong>
+              ${orderData.customerPhone}
+            </p>
+
+            <p>
+              <strong>Adresa:</strong>
+              ${orderData.address},
+              ${orderData.city}
+            </p>
+
+            <p>
+              <strong>Napomena:</strong>
+              ${
+                orderData.note ||
+                'Nema napomene'
+              }
+            </p>
+
+            <p>
+              <strong>ID narudžbe:</strong>
+              ${orderReference.id}
+            </p>
+          `,
+        },
+
+        orderId: orderReference.id,
+        type: 'new-order',
+        createdAt: serverTimestamp(),
+      });
 
       console.log(
         'Narudžba uspješno kreirana:',
@@ -244,7 +365,7 @@ readByCustomer: true,
       }, 1200);
     } catch (orderError) {
       console.error(
-        'Error creating order:',
+        'Greška pri kreiranju narudžbe:',
         orderError
       );
 
@@ -253,7 +374,7 @@ readByCustomer: true,
         'permission-denied'
       ) {
         setError(
-          'Nemate dozvolu za kreiranje narudžbe. Provjerite da ste prijavljeni i da Firestore Rules dozvoljavaju upis u orders.'
+          'Narudžba je možda kreirana, ali email dokument nema dozvolu za upis. Provjerite Firestore Rules za kolekciju mail.'
         );
       } else {
         setError(
@@ -408,7 +529,9 @@ readByCustomer: true,
             </div>
 
             <div className="checkout-total">
-              <span>Ukupno za plaćanje</span>
+              <span>
+                Ukupno za plaćanje
+              </span>
 
               <strong>
                 {totalPrice.toFixed(2)} KM
