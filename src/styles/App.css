@@ -43,13 +43,7 @@ body {
   overflow-x: hidden;
   background: var(--gray-light);
   color: var(--text);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
 }
 
@@ -108,11 +102,7 @@ a {
   top: 0;
   z-index: 1000;
   padding: 0.65rem 0;
-  background: linear-gradient(
-    135deg,
-    var(--aqua) 0%,
-    var(--pink-light) 100%
-  );
+  background: linear-gradient(135deg, var(--aqua) 0%, var(--pink-light) 100%);
   border-bottom: 2px solid var(--yellow);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
   backdrop-filter: blur(10px);
@@ -138,9 +128,7 @@ a {
   font-weight: 900;
   letter-spacing: -0.04em;
   white-space: nowrap;
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .nav-logo:hover {
@@ -149,9 +137,11 @@ a {
 }
 
 .nav-logo-icon {
-  display: inline-block;
-  font-size: 1.55rem;
-  animation: float 3s ease-in-out infinite;
+  width: 1.4em;
+  height: 1.4em;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
 }
 
 .nav-logo-text {
@@ -178,11 +168,7 @@ a {
   font-size: 0.82rem;
   font-weight: 800;
   white-space: nowrap;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .nav-links a:hover,
@@ -241,11 +227,7 @@ a {
   font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .user-menu-button:hover,
@@ -334,7 +316,7 @@ a {
   outline: none;
 }
 
-/* Notification */
+/* Notification Badge */
 
 .notification-badge {
   display: inline-flex;
@@ -355,11 +337,9 @@ a {
 }
 
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0) rotate(0deg);
   }
-
   50% {
     transform: translateY(-5px) rotate(8deg);
   }
@@ -370,7 +350,6 @@ a {
     opacity: 0;
     transform: translateY(-6px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -378,11 +357,9 @@ a {
 }
 
 @keyframes notificationPulse {
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.12);
   }
@@ -398,17 +375,7 @@ a {
   min-height: 310px;
   display: flex;
   align-items: center;
-  background:
-    linear-gradient(
-      110deg,
-      rgba(4, 18, 35, 0.98),
-      rgba(7, 47, 87, 0.88)
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      #168ee4,
-      transparent 35%
-    );
+  background: linear-gradient(110deg, rgba(4, 18, 35, 0.98), rgba(7, 47, 87, 0.88)), radial-gradient(circle at 80% 20%, #168ee4, transparent 35%);
   color: var(--white);
 }
 
@@ -469,10 +436,7 @@ a {
   font-size: 0.9rem;
   font-weight: 900;
   box-shadow: 0 4px 0 var(--yellow-dark);
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .hero-cta:hover,
@@ -522,10 +486,7 @@ a {
   border-radius: 8px;
   color: var(--text);
   font-size: 0.9rem;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .search-input::placeholder {
@@ -553,9 +514,7 @@ a {
   color: var(--white);
   font-size: 0.75rem;
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .search-clear:hover,
@@ -616,11 +575,7 @@ a {
   font-family: inherit;
   text-align: center;
   box-shadow: var(--shadow);
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .category-card:hover,
@@ -686,9 +641,7 @@ a {
   color: var(--navy-dark);
   font-size: 0.8rem;
   font-weight: 800;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .clear-filters-btn:hover,
@@ -717,9 +670,7 @@ a {
   border: 1px solid #e0e6ec;
   border-radius: 9px;
   box-shadow: var(--shadow);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .product-card:hover {
@@ -771,9 +722,7 @@ a {
   font-size: 0.85rem;
   font-weight: 900;
   text-align: center;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .product-card-button:hover,
@@ -875,9 +824,7 @@ a {
   border-radius: 6px;
   color: var(--text);
   font-size: 0.9rem;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-input:focus,
@@ -916,9 +863,7 @@ a {
   color: var(--navy-dark);
   font-size: 0.9rem;
   font-weight: 950;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .form-button:hover {
@@ -940,18 +885,7 @@ a {
 .checkout-page {
   min-height: 70vh;
   padding: 2rem 1rem;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(168, 237, 234, 0.3),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(254, 214, 227, 0.35),
-      transparent 35%
-    ),
-    #fafafa;
+  background: radial-gradient(circle at top left, rgba(168, 237, 234, 0.3), transparent 35%), radial-gradient(circle at bottom right, rgba(254, 214, 227, 0.35), transparent 35%), #fafafa;
 }
 
 .checkout-header {
@@ -1072,11 +1006,7 @@ a {
   width: 30px;
   height: 30px;
   padding: 0;
-  background: linear-gradient(
-    135deg,
-    var(--aqua),
-    var(--pink-light)
-  );
+  background: linear-gradient(135deg, var(--aqua), var(--pink-light));
   border: 0;
   border-radius: 50%;
   color: #555555;
@@ -1127,18 +1057,7 @@ a {
 .orders-page {
   min-height: 70vh;
   padding: 2rem 1rem;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(168, 237, 234, 0.35),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(254, 214, 227, 0.4),
-      transparent 35%
-    ),
-    #fafafa;
+  background: radial-gradient(circle at top left, rgba(168, 237, 234, 0.35), transparent 35%), radial-gradient(circle at bottom right, rgba(254, 214, 227, 0.4), transparent 35%), #fafafa;
 }
 
 .auth-container {
@@ -1185,20 +1104,14 @@ a {
   display: block;
   width: 100%;
   padding: 0.75rem 1rem;
-  background: linear-gradient(
-    135deg,
-    var(--aqua),
-    var(--pink-light)
-  );
+  background: linear-gradient(135deg, var(--aqua), var(--pink-light));
   border: 0;
   border-radius: 25px;
   color: #555555;
   font-weight: 900;
   cursor: pointer;
   box-shadow: 0 4px 13px rgba(254, 214, 227, 0.35);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .auth-button:hover {
@@ -1277,11 +1190,7 @@ a {
   width: 62px;
   height: 62px;
   flex-shrink: 0;
-  background: linear-gradient(
-    135deg,
-    var(--aqua),
-    var(--pink-light)
-  );
+  background: linear-gradient(135deg, var(--aqua), var(--pink-light));
   border-radius: 50%;
   color: #555555;
   font-size: 1.55rem;
@@ -1338,10 +1247,7 @@ a {
   color: #555555;
   font-size: 0.88rem;
   font-weight: 800;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .profile-action-link:hover {
@@ -1380,6 +1286,18 @@ a {
   border: 1px solid var(--light-gray);
   border-radius: 12px;
   box-shadow: var(--shadow);
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+}
+
+.order-card:focus-visible {
+  outline: 3px solid rgba(8, 119, 209, 0.35);
+  outline-offset: 3px;
 }
 
 .order-card-header {
@@ -1388,11 +1306,7 @@ a {
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.9rem;
-  background: linear-gradient(
-    135deg,
-    rgba(168, 237, 234, 0.28),
-    rgba(254, 214, 227, 0.35)
-  );
+  background: linear-gradient(135deg, rgba(168, 237, 234, 0.28), rgba(254, 214, 227, 0.35));
   border-bottom: 1px solid var(--light-gray);
 }
 
@@ -1669,9 +1583,7 @@ a {
   color: #444444;
   text-align: left;
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .conversation-item:hover,
@@ -1723,18 +1635,7 @@ a {
 .admin-dashboard {
   min-height: 75vh;
   padding: 2rem 1rem;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(168, 237, 234, 0.25),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(254, 214, 227, 0.35),
-      transparent 35%
-    ),
-    #fafafa;
+  background: radial-gradient(circle at top left, rgba(168, 237, 234, 0.25), transparent 35%), radial-gradient(circle at bottom right, rgba(254, 214, 227, 0.35), transparent 35%), #fafafa;
 }
 
 .admin-dashboard-container {
@@ -1803,20 +1704,12 @@ a {
   font-size: 0.8rem;
   font-weight: 800;
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .admin-tab:hover,
 .admin-tab.active {
-  background: linear-gradient(
-    135deg,
-    var(--aqua),
-    var(--pink-light)
-  );
+  background: linear-gradient(135deg, var(--aqua), var(--pink-light));
   border-color: var(--pink-light);
   color: #444444;
   transform: translateY(-2px);
@@ -1860,9 +1753,7 @@ a {
   font-size: 0.75rem;
   font-weight: 800;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .admin-secondary-button {
@@ -1976,11 +1867,7 @@ a {
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: linear-gradient(
-    135deg,
-    rgba(168, 237, 234, 0.25),
-    rgba(254, 214, 227, 0.35)
-  );
+  background: linear-gradient(135deg, rgba(168, 237, 234, 0.25), rgba(254, 214, 227, 0.35));
 }
 
 .admin-order-header h3 {
@@ -2260,10 +2147,6 @@ a {
     font-size: 1.25rem;
   }
 
-  .nav-logo-icon {
-    font-size: 1.45rem;
-  }
-
   .nav-links {
     gap: 0.25rem;
   }
@@ -2439,29 +2322,12 @@ a {
     font-size: 0.9rem;
   }
 }
-.order-card {
-  position: relative;
-  cursor: pointer;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
-}
 
-.order-card:hover {
-  transform: translateY(-2px);
-}
-
-.order-card:focus-visible {
-  outline: 3px solid rgba(8, 119, 209, 0.35);
-  outline-offset: 3px;
-}
+/* Order Card Unread */
 
 .order-card-unread {
   border: 2px solid #ffd400;
-  box-shadow:
-    0 0 0 3px rgba(255, 212, 0, 0.22),
-    0 10px 25px rgba(3, 20, 40, 0.18);
+  box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.22), 0 10px 25px rgba(3, 20, 40, 0.18);
 }
 
 .order-card-unread::before {
@@ -2492,6 +2358,9 @@ a {
     font-size: 0.7rem;
   }
 }
+
+/* Cookie Banner */
+
 .cookie-banner,
 .cookie-panel {
   position: fixed;
@@ -2574,6 +2443,9 @@ a {
     width: 100%;
   }
 }
+
+/* Cookie Consent Overlay */
+
 .cookie-consent-overlay {
   position: fixed;
   z-index: 2147483647;
@@ -2685,11 +2557,4 @@ a {
   .cookie-button {
     width: 100%;
   }
-}
-.nav-logo-icon {
-  width: 1.4em;
-  height: 1.4em;
-  object-fit: contain;
-  display: inline-block;
-  vertical-align: middle;
 }

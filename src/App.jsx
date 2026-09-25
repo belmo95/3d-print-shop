@@ -246,7 +246,7 @@ function Footer({ isAdmin }) {
             </p>
             <p>
               📞 VIBER{' '}
-              <a href="tel:+38762351830">+387 62 351 830</a>
+              <a href="tel:+38762351830">+387 62 489 886</a>
             </p>
 
             <div className="footer-social">
